@@ -1,55 +1,74 @@
 // Exportador estático para hospedagem em Hostinger (Apache).
-// Detecta automaticamente o bundle do servidor gerado pelo build
-// (.mjs ou .js em dist/server ou .output/server), executa o handler
-// para as rotas públicas e grava index.html, sitemap.xml, robots.txt
-// e .htaccess dentro de dist/client.
-import { existsSync, mkdirSync, writeFileSync, readFileSync, statSync, readdirSync } from "node:fs";
+// O build do TanStack Start gera:
+//   dist/client/  → assets do navegador (JS/CSS/imagens hasheados)
+//   dist/server/  → bundle Cloudflare Workers (NÃO roda em Node)
+// Como o alvo é hospedagem estática, geramos um index.html SPA que carrega
+// o bundle do cliente. O TanStack Router hidrata e roteia no navegador.
+// Também emitimos sitemap.xml, robots.txt e .htaccess com fallback SPA.
+import { existsSync, mkdirSync, writeFileSync, readFileSync, readdirSync, statSync, copyFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import { pathToFileURL } from "node:url";
 
 const ROOT = resolve(process.cwd());
 const OUT_DIR = join(ROOT, "dist", "client");
+const ASSETS_DIR = join(OUT_DIR, "assets");
 
-if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
-
-function findServerEntry() {
-  const candidates = [
-    "dist/server/server.mjs",
-    "dist/server/server.js",
-    "dist/server/index.mjs",
-    "dist/server/index.js",
-    ".output/server/index.mjs",
-    ".output/server/index.js",
-  ];
-  for (const rel of candidates) {
-    const p = join(ROOT, rel);
-    if (existsSync(p) && statSync(p).isFile()) return p;
-  }
-  // fallback: procurar qualquer .mjs/.js em dist/server ou .output/server
-  for (const base of ["dist/server", ".output/server"]) {
-    const dir = join(ROOT, base);
-    if (!existsSync(dir)) continue;
-    const files = readdirSync(dir).filter((f) => f.endsWith(".mjs") || f.endsWith(".js"));
-    if (files.length) return join(dir, files[0]);
-  }
-  return null;
+if (!existsSync(ASSETS_DIR)) {
+  console.error("✗ dist/client/assets não existe — rode `npm run build` antes.");
+  process.exit(1);
 }
 
-async function renderRoute(handler, path) {
-  const req = new Request(`http://localhost${path}`, { method: "GET" });
-  const res = await handler.fetch(req, {}, {});
-  const body = await res.text();
-  return { status: res.status, body, contentType: res.headers.get("content-type") || "" };
+const files = readdirSync(ASSETS_DIR);
+const entryJs = files.find((f) => /^index-.*\.js$/.test(f));
+const entryCss = files.find((f) => /\.css$/.test(f));
+if (!entryJs) {
+  console.error("✗ Não encontrei o entry JS (index-*.js) em dist/client/assets.");
+  process.exit(1);
 }
+console.log("Entry JS:", entryJs);
+if (entryCss) console.log("Entry CSS:", entryCss);
 
-function writeOut(relPath, content) {
-  const full = join(OUT_DIR, relPath);
-  mkdirSync(dirname(full), { recursive: true });
-  writeFileSync(full, content);
-  console.log("→", relPath, `(${Buffer.byteLength(content)} bytes)`);
-}
+const SITE_URL = "https://gaiacreative.com.br";
 
-const HTACCESS = `# Fallback SPA + compressão
+const INDEX_HTML = `<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gaia Creative — Blog para Donos de Agência de Marketing</title>
+    <meta name="description" content="Estratégias, ferramentas e táticas em português para quem quer abrir e escalar uma agência de marketing lucrativa." />
+    <meta property="og:site_name" content="Gaia Creative" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Gaia Creative — Blog para Donos de Agência de Marketing" />
+    <meta property="og:description" content="Estratégias, ferramentas e táticas em português para quem quer abrir e escalar uma agência de marketing lucrativa." />
+    <meta property="og:url" content="${SITE_URL}/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="${SITE_URL}/" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" />
+${entryCss ? `    <link rel="stylesheet" href="/assets/${entryCss}" />\n` : ""}    <link rel="modulepreload" href="/assets/${entryJs}" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/assets/${entryJs}"></script>
+  </body>
+</html>
+`;
+
+const SITEMAP = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>${SITE_URL}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+</urlset>
+`;
+
+const ROBOTS = `User-agent: *
+Allow: /
+
+Sitemap: ${SITE_URL}/sitemap.xml
+`;
+
+const HTACCESS = `# Fallback SPA + compressão + cache
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -70,58 +89,36 @@ const HTACCESS = `# Fallback SPA + compressão
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/jpeg "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
   ExpiresByType text/html "access plus 1 hour"
 </IfModule>
 `;
 
-const ROBOTS = `User-agent: *
-Allow: /
-
-Sitemap: https://gaiacreative.com.br/sitemap.xml
-`;
-
-async function main() {
-  const entry = findServerEntry();
-  if (!entry) {
-    console.warn("⚠ Servidor não encontrado, gerando somente arquivos estáticos auxiliares.");
-    writeOut("robots.txt", ROBOTS);
-    writeOut(".htaccess", HTACCESS);
-    return;
-  }
-  console.log("Usando server entry:", entry);
-
-  const mod = await import(pathToFileURL(entry).href);
-  const handler = mod.default ?? mod;
-  if (!handler?.fetch) throw new Error("Server entry não expõe .fetch()");
-
-  // Home
-  const home = await renderRoute(handler, "/");
-  if (home.status >= 400) throw new Error(`Falha ao renderizar /: HTTP ${home.status}`);
-  writeOut("index.html", home.body);
-
-  // Sitemap
-  try {
-    const sm = await renderRoute(handler, "/sitemap.xml");
-    if (sm.status < 400 && sm.body.trim().startsWith("<")) {
-      writeOut("sitemap.xml", sm.body);
-    }
-  } catch (e) {
-    console.warn("sitemap.xml não gerado:", e.message);
-  }
-
-  // robots.txt: prioriza public/robots.txt se existir, senão gera o padrão.
-  const publicRobots = join(ROOT, "public", "robots.txt");
-  if (existsSync(publicRobots) && !existsSync(join(OUT_DIR, "robots.txt"))) {
-    writeOut("robots.txt", readFileSync(publicRobots));
-  } else if (!existsSync(join(OUT_DIR, "robots.txt"))) {
-    writeOut("robots.txt", ROBOTS);
-  }
-
-  writeOut(".htaccess", HTACCESS);
-  console.log("✓ Export concluído em", OUT_DIR);
+function writeOut(relPath, content) {
+  const full = join(OUT_DIR, relPath);
+  mkdirSync(dirname(full), { recursive: true });
+  writeFileSync(full, content);
+  const size = typeof content === "string" ? Buffer.byteLength(content) : content.length;
+  console.log("→", relPath, `(${size} bytes)`);
 }
 
-main().catch((err) => {
-  console.error("✗ Export falhou:", err);
-  process.exit(1);
-});
+// Copiar public/ (favicon, robots.txt do usuário etc) se ainda não estiver em dist/client
+const PUBLIC_DIR = join(ROOT, "public");
+if (existsSync(PUBLIC_DIR)) {
+  for (const name of readdirSync(PUBLIC_DIR)) {
+    const src = join(PUBLIC_DIR, name);
+    const dst = join(OUT_DIR, name);
+    if (statSync(src).isFile() && !existsSync(dst)) {
+      copyFileSync(src, dst);
+      console.log("→", name, "(copiado de public/)");
+    }
+  }
+}
+
+writeOut("index.html", INDEX_HTML);
+writeOut("sitemap.xml", SITEMAP);
+// Só sobrescreve robots se ninguém copiou de public/
+if (!existsSync(join(OUT_DIR, "robots.txt"))) writeOut("robots.txt", ROBOTS);
+writeOut(".htaccess", HTACCESS);
+
+console.log("✓ Export concluído em", OUT_DIR);

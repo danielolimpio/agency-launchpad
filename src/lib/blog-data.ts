@@ -1,4 +1,4 @@
-import heroWorkspace from "@/assets/hero-workspace.jpg";
+import heroWorkspace from "@/assets/hero-workspace.webp";
 import cardAbstract from "@/assets/card-abstract.jpg";
 import cardTools from "@/assets/card-tools.jpg";
 import cardManagement from "@/assets/card-management.jpg";

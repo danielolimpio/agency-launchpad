@@ -65,7 +65,8 @@ function Home() {
               height={900}
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/40" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent" />
             <div className="container-blog relative h-full flex flex-col justify-end pb-16">
               <Badge color={hero.badgeColor}>{hero.badge}</Badge>
               <h1 className="mt-4 max-w-3xl text-3xl sm:text-5xl font-black leading-tight">

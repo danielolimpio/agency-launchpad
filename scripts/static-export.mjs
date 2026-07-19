@@ -11,6 +11,7 @@ import {
   cpSync,
   existsSync,
   mkdirSync,
+  readFileSync,
   readdirSync,
   rmSync,
   statSync,
@@ -101,22 +102,11 @@ function pickEntryJs(assetsDir) {
 
 function readdirSafeRead(file) {
   try {
-    return listFiles(file).length ? "" : String(Buffer.from(requireReadFile(file)));
+    return readFileSync(file, "utf8");
   } catch {
     return "";
   }
 }
-
-function requireReadFile(file) {
-  // Lazy dynamic import is unnecessary in Node here; this wrapper keeps all fs
-  // imports explicit at the top while allowing safe text probing below.
-  return readdirSync(dirname(file)) && globalThis.__staticExportReadFile(file);
-}
-
-globalThis.__staticExportReadFile = (file) => {
-  const { readFileSync } = require("node:fs");
-  return readFileSync(file);
-};
 
 const ASSETS_DIR = findAssetsDir();
 if (!ASSETS_DIR) {

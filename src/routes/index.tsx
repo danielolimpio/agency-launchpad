@@ -113,15 +113,15 @@ function Home() {
           <div className="container-blog">
             <SectionTitle title="Posts em Alta" subtitle="Você leu na semana" action="LEIA MAIS" />
             <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr_1fr]">
-              <OverlayCard article={trending[0]} size="lg" />
+              <OverlayCard article={trending[0]} size="lg" className="lg:!h-[600px]" />
               <div className="flex flex-col gap-6">
                 {trending.slice(1, 3).map((a) => (
-                  <OverlayCard key={a.title} article={a} />
+                  <OverlayCard key={a.title} article={a} className="lg:!h-[288px]" />
                 ))}
               </div>
               <div className="flex flex-col gap-6">
                 {trending.slice(3, 5).map((a) => (
-                  <OverlayCard key={a.title} article={a} />
+                  <OverlayCard key={a.title} article={a} className="lg:!h-[288px]" />
                 ))}
               </div>
             </div>

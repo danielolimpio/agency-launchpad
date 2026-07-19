@@ -87,10 +87,10 @@ export function ArticleCard({ article, size = "md" }: { article: Article; size?:
   );
 }
 
-export function OverlayCard({ article, size = "md" }: { article: Article; size?: "md" | "lg" }) {
+export function OverlayCard({ article, size = "md", className }: { article: Article; size?: "md" | "lg"; className?: string }) {
   const h = size === "lg" ? "h-[520px]" : "h-[320px]";
   return (
-    <article className={`card-hover group relative overflow-hidden rounded-xl ${h}`}>
+    <article className={`card-hover group relative overflow-hidden rounded-xl ${h} ${className || ""}`}>
       <a href="#" className="absolute inset-0">
         <img
           src={article.image}

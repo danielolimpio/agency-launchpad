@@ -81,11 +81,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Estratégias, ferramentas e táticas em português para quem quer abrir e escalar uma agência de marketing lucrativa.",
+          "Estratégias, ferramentas e táticas para quem quer abrir e escalar uma agência de marketing lucrativa. Conteúdo em português para founders de agência.",
       },
       { property: "og:site_name", content: "Gaia Creative" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Gaia Creative — Blog para Donos de Agência de Marketing" },
+      { name: "twitter:title", content: "Gaia Creative — Blog para Donos de Agência de Marketing" },
+      { property: "og:description", content: "Estratégias, ferramentas e táticas para quem quer abrir e escalar uma agência de marketing lucrativa. Conteúdo em português para founders de agência." },
+      { name: "twitter:description", content: "Estratégias, ferramentas e táticas para quem quer abrir e escalar uma agência de marketing lucrativa. Conteúdo em português para founders de agência." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8c86b689-c215-4669-8a13-05c4129b15f9/id-preview-fcc1e172--278eed34-7e1b-459b-a4f5-255ad97abab0.lovable.app-1784491319840.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8c86b689-c215-4669-8a13-05c4129b15f9/id-preview-fcc1e172--278eed34-7e1b-459b-a4f5-255ad97abab0.lovable.app-1784491319840.png" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

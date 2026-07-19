@@ -23,11 +23,11 @@ export const Route = createFileRoute("/")({
         content:
           "Estratégias, ferramentas e táticas para quem quer abrir e escalar uma agência de marketing lucrativa. Conteúdo em português para founders de agência.",
       },
-      { property: "og:title", content: "Gaia Creative — Blog para Donos de Agência" },
+      { property: "og:title", content: "Gaia Creative — Blog para Donos de Agência de Marketing" },
       {
         property: "og:description",
         content:
-          "Estratégias, ferramentas e táticas para quem quer abrir e escalar uma agência de marketing lucrativa.",
+          "Estratégias, ferramentas e táticas para quem quer abrir e escalar uma agência de marketing lucrativa. Conteúdo em português para founders de agência.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },

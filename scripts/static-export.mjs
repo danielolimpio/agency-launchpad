@@ -1,33 +1,155 @@
 // Exportador estático para hospedagem em Hostinger (Apache).
-// O build do TanStack Start gera:
-//   dist/client/  → assets do navegador (JS/CSS/imagens hasheados)
-//   dist/server/  → bundle Cloudflare Workers (NÃO roda em Node)
-// Como o alvo é hospedagem estática, geramos um index.html SPA que carrega
-// o bundle do cliente. O TanStack Router hidrata e roteia no navegador.
-// Também emitimos sitemap.xml, robots.txt e .htaccess com fallback SPA.
-import { existsSync, mkdirSync, writeFileSync, readFileSync, readdirSync, statSync, copyFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+//
+// O build do TanStack Start pode variar o diretório público conforme versão/
+// ambiente. Em vez de assumir cegamente dist/client/assets, este script:
+// 1) localiza automaticamente o diretório de assets real dentro de dist/.output;
+// 2) escolhe o entry JS verdadeiro do cliente;
+// 3) normaliza tudo para dist/client, que é a pasta enviada via FTP;
+// 4) gera index.html, sitemap.xml, robots.txt, .htaccess e 404.html.
+import {
+  copyFileSync,
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
+import { dirname, join, relative, resolve } from "node:path";
 
 const ROOT = resolve(process.cwd());
 const OUT_DIR = join(ROOT, "dist", "client");
-const ASSETS_DIR = join(OUT_DIR, "assets");
-
-if (!existsSync(ASSETS_DIR)) {
-  console.error("✗ dist/client/assets não existe — rode `npm run build` antes.");
-  process.exit(1);
-}
-
-const files = readdirSync(ASSETS_DIR);
-const entryJs = files.find((f) => /^index-.*\.js$/.test(f));
-const entryCss = files.find((f) => /\.css$/.test(f));
-if (!entryJs) {
-  console.error("✗ Não encontrei o entry JS (index-*.js) em dist/client/assets.");
-  process.exit(1);
-}
-console.log("Entry JS:", entryJs);
-if (entryCss) console.log("Entry CSS:", entryCss);
-
 const SITE_URL = "https://gaiacreative.com.br";
+
+function slash(path) {
+  return path.split("\\").join("/");
+}
+
+function listFiles(dir) {
+  if (!existsSync(dir)) return [];
+  const entries = [];
+  for (const name of readdirSync(dir)) {
+    const full = join(dir, name);
+    const stat = statSync(full);
+    if (stat.isDirectory()) entries.push(...listFiles(full));
+    else if (stat.isFile()) entries.push(full);
+  }
+  return entries;
+}
+
+function listDirs(dir) {
+  if (!existsSync(dir)) return [];
+  const entries = [];
+  for (const name of readdirSync(dir)) {
+    const full = join(dir, name);
+    if (statSync(full).isDirectory()) {
+      entries.push(full, ...listDirs(full));
+    }
+  }
+  return entries;
+}
+
+function printBuildDiagnostics() {
+  console.error("\nDiagnóstico do build encontrado no runner:");
+  for (const dir of ["dist", ".output", "build", "out"]) {
+    const full = join(ROOT, dir);
+    if (!existsSync(full)) {
+      console.error(`- ${dir}/ não existe`);
+      continue;
+    }
+    const files = listFiles(full)
+      .map((f) => slash(relative(ROOT, f)))
+      .slice(0, 80);
+    console.error(`- ${dir}/ existe; primeiros arquivos:`);
+    for (const file of files) console.error(`  • ${file}`);
+  }
+}
+
+function findAssetsDir() {
+  const directCandidates = [
+    join(ROOT, "dist", "client", "assets"),
+    join(ROOT, ".output", "public", "assets"),
+    join(ROOT, "dist", "public", "assets"),
+    join(ROOT, ".output", "client", "assets"),
+    join(ROOT, "build", "client", "assets"),
+    join(ROOT, "out", "assets"),
+  ];
+
+  const discoveredCandidates = ["dist", ".output", "build", "out"]
+    .flatMap((dir) => listDirs(join(ROOT, dir)))
+    .filter((dir) => dir.endsWith(`${slash("/assets")}`) || dir.endsWith("assets"));
+
+  const candidates = [...new Set([...directCandidates, ...discoveredCandidates])];
+  return candidates.find((dir) => listFiles(dir).some((file) => file.endsWith(".js")));
+}
+
+function pickEntryJs(assetsDir) {
+  const jsFiles = listFiles(assetsDir)
+    .filter((file) => file.endsWith(".js"))
+    .sort((a, b) => statSync(b).size - statSync(a).size);
+
+  const preferred = jsFiles.find((file) => /^index-[\w-]+\.js$/.test(slash(relative(assetsDir, file))));
+  if (preferred) return preferred;
+
+  const hydratedEntry = jsFiles.find((file) => {
+    const source = readdirSafeRead(file);
+    return source.includes("hydrateRoot") && source.includes("document");
+  });
+  return hydratedEntry ?? jsFiles[0];
+}
+
+function readdirSafeRead(file) {
+  try {
+    return listFiles(file).length ? "" : String(Buffer.from(requireReadFile(file)));
+  } catch {
+    return "";
+  }
+}
+
+function requireReadFile(file) {
+  // Lazy dynamic import is unnecessary in Node here; this wrapper keeps all fs
+  // imports explicit at the top while allowing safe text probing below.
+  return readdirSync(dirname(file)) && globalThis.__staticExportReadFile(file);
+}
+
+globalThis.__staticExportReadFile = (file) => {
+  const { readFileSync } = require("node:fs");
+  return readFileSync(file);
+};
+
+const ASSETS_DIR = findAssetsDir();
+if (!ASSETS_DIR) {
+  console.error("✗ Não encontrei assets JS do cliente em dist/ ou .output/ após o build.");
+  printBuildDiagnostics();
+  process.exit(1);
+}
+
+const SOURCE_CLIENT_DIR = dirname(ASSETS_DIR);
+const entryJsFile = pickEntryJs(ASSETS_DIR);
+if (!entryJsFile) {
+  console.error("✗ Encontrei a pasta de assets, mas nenhum arquivo JavaScript do cliente.");
+  printBuildDiagnostics();
+  process.exit(1);
+}
+
+if (resolve(SOURCE_CLIENT_DIR) !== resolve(OUT_DIR)) {
+  rmSync(OUT_DIR, { recursive: true, force: true });
+  mkdirSync(dirname(OUT_DIR), { recursive: true });
+  cpSync(SOURCE_CLIENT_DIR, OUT_DIR, { recursive: true });
+}
+
+const normalizedAssetsDir = join(OUT_DIR, relative(SOURCE_CLIENT_DIR, ASSETS_DIR));
+const entryJs = slash("/" + relative(OUT_DIR, join(normalizedAssetsDir, relative(ASSETS_DIR, entryJsFile))));
+const cssFiles = listFiles(normalizedAssetsDir)
+  .filter((file) => file.endsWith(".css"))
+  .sort()
+  .map((file) => slash("/" + relative(OUT_DIR, file)));
+
+console.log("Assets detectados em:", slash(relative(ROOT, ASSETS_DIR)));
+console.log("Pasta final para FTP:", slash(relative(ROOT, OUT_DIR)));
+console.log("Entry JS:", entryJs);
+if (cssFiles.length) console.log("CSS:", cssFiles.join(", "));
 
 const INDEX_HTML = `<!doctype html>
 <html lang="pt-BR">
@@ -47,11 +169,11 @@ const INDEX_HTML = `<!doctype html>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" />
-${entryCss ? `    <link rel="stylesheet" href="/assets/${entryCss}" />\n` : ""}    <link rel="modulepreload" href="/assets/${entryJs}" />
+${cssFiles.map((href) => `    <link rel="stylesheet" href="${href}" />`).join("\n")}
+    <link rel="modulepreload" href="${entryJs}" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/assets/${entryJs}"></script>
+    <script type="module" src="${entryJs}"></script>
   </body>
 </html>
 `;
@@ -116,9 +238,9 @@ if (existsSync(PUBLIC_DIR)) {
 }
 
 writeOut("index.html", INDEX_HTML);
+writeOut("404.html", INDEX_HTML);
 writeOut("sitemap.xml", SITEMAP);
-// Só sobrescreve robots se ninguém copiou de public/
-if (!existsSync(join(OUT_DIR, "robots.txt"))) writeOut("robots.txt", ROBOTS);
+writeOut("robots.txt", ROBOTS);
 writeOut(".htaccess", HTACCESS);
 
 console.log("✓ Export concluído em", OUT_DIR);

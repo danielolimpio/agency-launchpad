@@ -94,9 +94,10 @@ export const Route = createFileRoute("/artigos/$slug")({
 });
 
 function ArticlePage() {
-  const { article: a } = Route.useLoaderData();
+  const loaderData = Route.useLoaderData() as { article: FullArticle };
+  const a = loaderData.article;
   const headings = a.blocks.filter(
-    (b): b is Extract<typeof a.blocks[number], { type: "h2"; id?: string }> =>
+    (b): b is Extract<FullArticle["blocks"][number], { type: "h2" }> =>
       b.type === "h2" && !!b.id,
   );
 

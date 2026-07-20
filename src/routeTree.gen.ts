@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ArtigosIndexRouteImport } from './routes/artigos.index'
+import { Route as ArtigosSlugRouteImport } from './routes/artigos.$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -22,31 +24,49 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArtigosIndexRoute = ArtigosIndexRouteImport.update({
+  id: '/artigos/',
+  path: '/artigos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtigosSlugRoute = ArtigosSlugRouteImport.update({
+  id: '/artigos/$slug',
+  path: '/artigos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/artigos/$slug': typeof ArtigosSlugRoute
+  '/artigos/': typeof ArtigosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/artigos/$slug': typeof ArtigosSlugRoute
+  '/artigos': typeof ArtigosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/artigos/$slug': typeof ArtigosSlugRoute
+  '/artigos/': typeof ArtigosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sitemap.xml'
+  fullPaths: '/' | '/sitemap.xml' | '/artigos/$slug' | '/artigos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sitemap.xml'
-  id: '__root__' | '/' | '/sitemap.xml'
+  to: '/' | '/sitemap.xml' | '/artigos/$slug' | '/artigos'
+  id: '__root__' | '/' | '/sitemap.xml' | '/artigos/$slug' | '/artigos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ArtigosSlugRoute: typeof ArtigosSlugRoute
+  ArtigosIndexRoute: typeof ArtigosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/artigos/': {
+      id: '/artigos/'
+      path: '/artigos'
+      fullPath: '/artigos/'
+      preLoaderRoute: typeof ArtigosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/artigos/$slug': {
+      id: '/artigos/$slug'
+      path: '/artigos/$slug'
+      fullPath: '/artigos/$slug'
+      preLoaderRoute: typeof ArtigosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ArtigosSlugRoute: ArtigosSlugRoute,
+  ArtigosIndexRoute: ArtigosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

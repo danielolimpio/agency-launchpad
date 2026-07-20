@@ -2,7 +2,7 @@ import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter, Newsletter } from "@/components/site-footer";
 import { BlockRenderer } from "@/components/article-blocks";
-import { articles, getArticle } from "@/lib/articles";
+import { articles, getArticle, type FullArticle } from "@/lib/articles";
 import { Clock, Calendar, User, ChevronRight, Share2, Link2, ExternalLink } from "lucide-react";
 
 const BASE_URL = "https://gaiacreative.com.br";

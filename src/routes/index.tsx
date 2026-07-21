@@ -17,22 +17,9 @@ import { ArrowRight } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Gaia Creative — Blog e Estratégias para Donos de Agência" },
-      {
-        name: "description",
-        content:
-          "Estratégias, ferramentas e táticas para quem quer abrir e escalar uma agência de marketing lucrativa. Conteúdo em português para founders de agência.",
-      },
-      { property: "og:title", content: "Gaia Creative — Blog e Estratégias para Donos de Agência" },
-      {
-        property: "og:description",
-        content:
-          "Estratégias, ferramentas e táticas para quem quer abrir e escalar uma agência de marketing lucrativa. Conteúdo em português para founders de agência.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://elite-agency-hub.lovable.app/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://elite-agency-hub.lovable.app/" }],
     scripts: [
       {
         type: "application/ld+json",

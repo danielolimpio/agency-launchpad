@@ -157,14 +157,20 @@ export function SiteFooter() {
           © 2026 Gaia Creative. Todos os direitos reservados.
         </p>
         <div className="flex gap-3">
-          {[Facebook, Dribbble, Twitter, Instagram, Linkedin].map((I, i) => (
+          {[
+            { Icon: Facebook, name: "Facebook" },
+            { Icon: Dribbble, name: "Dribbble" },
+            { Icon: Twitter, name: "Twitter" },
+            { Icon: Instagram, name: "Instagram" },
+            { Icon: Linkedin, name: "LinkedIn" },
+          ].map(({ Icon, name }) => (
             <a
-              key={i}
+              key={name}
               href="#"
-              aria-label="Rede social"
+              aria-label={`Gaia Creative no ${name}`}
               className="p-2 rounded-full hover:text-teal transition-colors"
             >
-              <I className="h-4 w-4" />
+              <Icon className="h-4 w-4" aria-hidden="true" />
             </a>
           ))}
         </div>

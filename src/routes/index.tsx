@@ -17,13 +17,13 @@ import { ArrowRight } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Gaia Creative — Blog para Donos de Agência de Marketing" },
+      { title: "Gaia Creative — Blog e Estratégias para Donos de Agência" },
       {
         name: "description",
         content:
           "Estratégias, ferramentas e táticas para quem quer abrir e escalar uma agência de marketing lucrativa. Conteúdo em português para founders de agência.",
       },
-      { property: "og:title", content: "Gaia Creative — Blog para Donos de Agência de Marketing" },
+      { property: "og:title", content: "Gaia Creative — Blog e Estratégias para Donos de Agência" },
       {
         property: "og:description",
         content:

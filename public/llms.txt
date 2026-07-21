@@ -1,0 +1,16 @@
+# Gaia Creative
+
+> Blog e estratégias para donos de agências de marketing que querem crescer de forma lucrativa, previsível e escalável.
+
+O Gaia Creative publica guias práticos, playbooks e análises sobre abertura, gestão, vendas, precificação e nichos premium para agências de marketing digital. O conteúdo é voltado a empreendedores brasileiros que estão montando ou escalando uma agência de serviços.
+
+## Pages
+
+- [Página Inicial](/): Destaques, artigos em alta, categorias e newsletter para donos de agência.
+- [Biblioteca de Artigos](/artigos): Índice completo dos guias e playbooks publicados.
+- [Como Abrir uma Agência de Marketing Digital em 2026](/artigos/como-abrir-agencia-de-marketing-digital-em-2026): Guia completo do zero ao primeiro contrato.
+- [Prospecção Fria para Agências de Marketing](/artigos/prospeccao-fria-para-agencias-de-marketing): Roteiro prático de outbound para fechar contratos B2B.
+
+## Optional
+
+- [Sitemap](/sitemap.xml): Lista de URLs públicas do site para rastreadores.

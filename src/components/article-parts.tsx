@@ -22,12 +22,13 @@ export function SectionTitle({
       </div>
       {action && (
         <a
-          href="#"
+          href="/artigos"
+          aria-label={`Leia mais artigos sobre ${title}`}
           className="shrink-0 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-pink hover:text-teal transition-colors"
         >
           {action}
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-pink">
-            <ArrowRight className="h-3.5 w-3.5" />
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
           </span>
         </a>
       )}

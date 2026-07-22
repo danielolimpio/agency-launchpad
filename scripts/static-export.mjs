@@ -265,6 +265,9 @@ const INDEX_HTML = `<!doctype html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Gaia Creative — Blog para Donos de Agência de Marketing</title>
     <meta name="description" content="Estratégias, ferramentas e táticas em português para quem quer abrir e escalar uma agência de marketing lucrativa." />
     <meta property="og:site_name" content="Gaia Creative" />
@@ -300,6 +303,20 @@ Sitemap: ${SITE_URL}/sitemap.xml
 `;
 
 const HTACCESS = `# Fallback SPA + compressão + cache
+<IfModule mod_headers.c>
+  <FilesMatch "^(index|404)\.html$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+  Header set X-LiteSpeed-Cache-Control "no-cache"
+</IfModule>
+
+<IfModule LiteSpeed>
+  CacheDisable public /
+  CacheDisable private /
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -315,13 +332,13 @@ const HTACCESS = `# Fallback SPA + compressão + cache
 
 <IfModule mod_expires.c>
   ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
   ExpiresByType text/css "access plus 1 year"
   ExpiresByType application/javascript "access plus 1 year"
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/jpeg "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
   ExpiresByType image/svg+xml "access plus 1 year"
-  ExpiresByType text/html "access plus 1 hour"
 </IfModule>
 `;
 

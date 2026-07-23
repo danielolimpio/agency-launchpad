@@ -103,6 +103,49 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://elite-agency-hub.lovable.app/#organization",
+              name: "Gaia Creative",
+              url: "https://elite-agency-hub.lovable.app",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://elite-agency-hub.lovable.app/favicon.ico",
+                width: 48,
+                height: 48,
+              },
+              sameAs: [
+                "https://www.instagram.com/gaiacreative",
+                "https://www.linkedin.com/company/gaiacreative",
+              ],
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://elite-agency-hub.lovable.app/#website",
+              name: "Gaia Creative — Blog e Estratégias para Donos de Agência",
+              url: "https://elite-agency-hub.lovable.app",
+              publisher: {
+                "@id": "https://elite-agency-hub.lovable.app/#organization",
+              },
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: "https://elite-agency-hub.lovable.app/artigos?q={search_term_string}",
+                },
+                "query-input": "required name=search_term_string",
+              },
+            },
+          ],
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,

@@ -914,7 +914,351 @@ export const articles: FullArticle[] = [
       { title: "ANPD — Lei Geral de Proteção de Dados", url: "https://www.gov.br/anpd/pt-br", source: "ANPD" },
     ],
   },
+  {
+    slug: "slogans-para-agencia-de-marketing-100-ideias-e-como-escolher",
+    title: "Slogans para Agência de Marketing: 100+ Ideias e Como Escolher o Nome Perfeito",
+    subtitle:
+      "Um guia prático para founders na fase de branding: como nomear sua agência, criar um slogan memorável e blindar a marca desde o dia zero.",
+    metaDescription:
+      "Guia completo com 100+ ideias de slogans e nomes para agência de marketing. Metodologia, exemplos reais, checklist jurídico e erros que matam a marca antes de nascer.",
+    keywords: [
+      "slogan para agência de marketing",
+      "nome para agência de marketing",
+      "ideias de slogan agência",
+      "como escolher nome de agência",
+      "branding para agência",
+    ],
+    category: "Nichos",
+    badge: "Branding",
+    badgeColor: "pink",
+    author: AUTHOR_ANA.name,
+    authorBio: AUTHOR_ANA.bio,
+    date: "20 de Julho, 2026",
+    dateISO: "2026-07-20",
+    readTime: "14 min",
+    image: images.cardContent,
+    imageAlt: "Mesa criativa com anotações de branding, nomes e slogans para agência de marketing",
+    tldr: [
+      "Nome fraco custa 3x mais em mídia para ficar memorável — invista tempo antes de pagar por reconhecimento.",
+      "Slogan bom cabe em uma linha, promete um resultado e diferencia do concorrente genérico.",
+      "Registre o nome no INPI e o domínio .com.br antes de imprimir cartão de visitas.",
+      "100+ exemplos deste guia servem como faísca; a escolha final precisa passar pelo teste do cliente ideal.",
+    ],
+    blocks: [
+      {
+        type: "p",
+        html: "Escolher o nome e o slogan da agência é a primeira decisão de marketing que você toma como founder. E é também a mais subestimada. A maioria decide em uma tarde, testa em três amigos e imprime cartão. Seis meses depois, descobre que o nome já está registrado, que o slogan não diz nada e que ninguém lembra da marca uma semana depois de conhecê-la.",
+      },
+      {
+        type: "p",
+        html: "Este guia condensa o processo que uso com founders de agência há mais de uma década. Você vai sair daqui com um método, um checklist jurídico e mais de 100 ideias reais para destravar sua criatividade — não para copiar.",
+      },
+      { type: "h2", text: "Por que nome e slogan importam mais do que você pensa", id: "por-que-importam" },
+      {
+        type: "p",
+        html: "Nome é atalho cognitivo. O cérebro do prospect leva menos de dois segundos para decidir se sua marca soa profissional, criativa, cara, barata ou confiável. Slogan é a promessa em uma linha — é o que fica quando o cliente fecha a aba. Juntos, eles reduzem custo de aquisição, encurtam ciclo de venda e aumentam preço percebido.",
+      },
+      {
+        type: "callout",
+        variant: "insight",
+        title: "Regra dos 3 segundos",
+        body:
+          "Se um estranho não consegue entender o que sua agência faz e para quem, apenas lendo nome + slogan em 3 segundos, sua marca ainda não está pronta para escalar.",
+      },
+      { type: "h2", text: "Os 5 arquétipos de nome de agência", id: "arquetipos" },
+      {
+        type: "steps",
+        items: [
+          {
+            title: "1. Nome descritivo",
+            body:
+              "Diz exatamente o que faz. Exemplos: Performance Digital, Growth Studio, SEO Brasil. Vantagem: SEO local e clareza. Desvantagem: baixa diferenciação e limita expansão futura.",
+          },
+          {
+            title: "2. Nome evocativo",
+            body:
+              "Sugere um conceito abstrato. Exemplos: Órbita, Ponte, Fábula, Norte. Vantagem: memorável e flexível. Desvantagem: exige investimento em posicionamento para explicar o que faz.",
+          },
+          {
+            title: "3. Nome fundador",
+            body:
+              "Usa o nome do dono. Exemplos: Ribeiro & Co, Freitas Marketing. Vantagem: autoridade pessoal. Desvantagem: dificulta venda futura da empresa e transferência de reputação.",
+          },
+          {
+            title: "4. Nome inventado",
+            body:
+              "Palavra nova, curta, sonora. Exemplos: Zuma, Loop, Yalo. Vantagem: domínio disponível e registro fácil no INPI. Desvantagem: precisa contexto para não soar aleatório.",
+          },
+          {
+            title: "5. Nome composto",
+            body:
+              "Junta duas ideias. Exemplos: Lab de Conteúdo, Casa da Marca, Oficina Digital. Vantagem: equilibra descrição e evocação. Desvantagem: pode ficar longo demais para redes sociais.",
+          },
+        ],
+      },
+      { type: "h2", text: "O método em 6 passos para criar seu nome", id: "metodo" },
+      {
+        type: "list",
+        ordered: true,
+        items: [
+          "Defina o nicho antes do nome. Uma agência para clínicas de estética pede um nome diferente de uma para SaaS B2B.",
+          "Liste 30 palavras associadas ao resultado que você entrega — não ao serviço.",
+          "Combine essas palavras em pares e faça brainstorm sem filtro por 40 minutos.",
+          "Elimine tudo que soa genérico, difícil de soletrar ou já usado por concorrente relevante.",
+          "Teste os 5 finalistas com 10 clientes ideais reais — não com a família.",
+          "Só depois compre domínio, registre CNPJ e inicie o processo no INPI.",
+        ],
+      },
+      {
+        type: "callout",
+        variant: "warning",
+        title: "Cuidado com nomes em inglês forçados",
+        body:
+          "'Growth Hackers Digital Solutions Brasil' virou piada em muitos nichos. Inglês funciona quando o cliente ideal já fala inglês (SaaS, cripto, tech). Para PME local, português direto vende mais.",
+      },
+      { type: "h2", text: "50 ideias de nomes para inspirar", id: "50-nomes" },
+      { type: "h3", text: "Evocativos e minimalistas (15)" },
+      {
+        type: "list",
+        items: [
+          "Órbita", "Norte", "Farol", "Prisma", "Ápice", "Fábula", "Vórtice", "Ponte",
+          "Ritmo", "Traço", "Vértice", "Zênite", "Aurora", "Kairós", "Tessera",
+        ],
+      },
+      { type: "h3", text: "Compostos com identidade (15)" },
+      {
+        type: "list",
+        items: [
+          "Casa da Marca", "Lab de Conteúdo", "Oficina Digital", "Estúdio Verbo",
+          "Ateliê Performance", "Fábrica de Funis", "Coletivo Sinal", "Ponto de Vista",
+          "Time do Crescimento", "Escola do Cliente", "Rede Vertical", "Cais Criativo",
+          "Praça Digital", "Rota Aberta", "Bússola Comercial",
+        ],
+      },
+      { type: "h3", text: "Inventados curtos e sonoros (10)" },
+      {
+        type: "list",
+        items: ["Zuma", "Yalo", "Kavo", "Miro", "Nuvo", "Trilo", "Rive", "Onda", "Vira", "Lume"],
+      },
+      { type: "h3", text: "Nichados por vertical (10)" },
+      {
+        type: "list",
+        items: [
+          "Clínica em Alta (saúde)", "Vitrine Local (varejo)", "Menu Cheio (food)",
+          "Ata Cheia (jurídico)", "Reforma Digital (construção)", "Cadeira Cheia (barbearia)",
+          "Sala de Aula (educação)", "Ficha Verde (fitness)", "Rota Fechada (turismo)",
+          "Portfólio Vivo (imobiliário)",
+        ],
+      },
+      {
+        type: "callout",
+        variant: "tip",
+        title: "Use essa lista como faísca, não como resposta",
+        body:
+          "Copiar nome de exemplo público te coloca em rota de conflito de marca. Combine, distorça, traduza — mas nunca copie um nome pronto.",
+      },
+      { type: "h2", text: "A anatomia de um slogan que vende", id: "anatomia-slogan" },
+      {
+        type: "p",
+        html: "Um bom slogan de agência responde três perguntas em uma frase: <strong>o que você faz, para quem e qual o resultado</strong>. Ele evita jargão, promete algo mensurável e não usa a palavra 'soluções' (a mais gasta do mercado brasileiro de agências).",
+      },
+      {
+        type: "stats",
+        items: [
+          { value: "≤ 8", label: "palavras no slogan ideal" },
+          { value: "1", label: "promessa central por marca" },
+          { value: "0", label: "vezes que 'soluções' deveria aparecer" },
+          { value: "3s", label: "tempo máximo para entender" },
+        ],
+      },
+      { type: "h2", text: "60+ ideias de slogans por categoria", id: "60-slogans" },
+      { type: "h3", text: "Slogans focados em resultado (15)" },
+      {
+        type: "list",
+        items: [
+          "Marketing que gera reunião, não só curtida.",
+          "Mais clientes. Menos achismo.",
+          "Sua agenda cheia começa aqui.",
+          "Do clique ao contrato assinado.",
+          "Vendas previsíveis, todo mês.",
+          "Tráfego que vira faturamento.",
+          "Menos vaidade, mais receita.",
+          "Marketing com meta, não com achismo.",
+          "Cada real investido volta com juros.",
+          "Nós entregamos oportunidade, não impressão.",
+          "Sua próxima venda mora aqui dentro.",
+          "Resultado antes do relatório bonito.",
+          "Meta batida é o único KPI que importa.",
+          "Cliente novo toda semana. Sem exagero.",
+          "Marketing pago que se paga.",
+        ],
+      },
+      { type: "h3", text: "Slogans com posicionamento premium (15)" },
+      {
+        type: "list",
+        items: [
+          "A agência das marcas que não têm pressa.",
+          "Marketing artesanal para marcas que querem durar.",
+          "Estratégia primeiro. Estética depois.",
+          "Menos clientes. Mais atenção.",
+          "Para quem enxerga marca como ativo.",
+          "Onde branding e performance se encontram.",
+          "Marketing pensado. Nunca terceirizado.",
+          "Sua marca merece mais do que template.",
+          "Feito à mão. Escalável por design.",
+          "A diferença está no detalhe que ninguém vê.",
+          "Menos ruído. Mais marca.",
+          "Marketing que envelhece bem.",
+          "Um portfólio pequeno. Cases enormes.",
+          "Cocriamos. Não executamos ordem de serviço.",
+          "A marca certa, no ritmo certo.",
+        ],
+      },
+      { type: "h3", text: "Slogans para agências nichadas (15)" },
+      {
+        type: "list",
+        items: [
+          "Marketing feito por quem entende clínica.",
+          "A agência oficial dos advogados que crescem.",
+          "SaaS B2B: do MQL ao contrato anual.",
+          "Restaurante lotado começa no Instagram certo.",
+          "E-commerce que vende também no ROAS.",
+          "Educação privada com matrícula previsível.",
+          "Construtoras que vendem planta na planta.",
+          "Beleza com agenda cheia, sem descontinho.",
+          "Consultoria que vira pipeline.",
+          "Franquia expandindo com marketing central.",
+          "Escritórios contábeis que faturam mais.",
+          "Imobiliária com lead qualificado, não curioso.",
+          "Fitness com aluno novo toda segunda-feira.",
+          "Turismo com alta temporada o ano todo.",
+          "Indústria B2B que enfim aparece no Google.",
+        ],
+      },
+      { type: "h3", text: "Slogans curtos e memoráveis (15)" },
+      {
+        type: "list",
+        items: [
+          "Menos ruído. Mais marca.",
+          "Cresça com método.",
+          "Marca que gira.",
+          "Vender é ciência.",
+          "Marketing sem enfeite.",
+          "Pense grande. Execute preciso.",
+          "Marca viva. Cliente novo.",
+          "Estratégia com endereço.",
+          "Do plano ao lucro.",
+          "Sua marca em movimento.",
+          "Cresce quem mede.",
+          "Marketing que respeita seu tempo.",
+          "Marca com propósito. Venda com método.",
+          "Menos slides. Mais receita.",
+          "Simples. Certeiro. Escalável.",
+        ],
+      },
+      { type: "h2", text: "Checklist jurídico antes de fechar a escolha", id: "checklist-juridico" },
+      {
+        type: "checklist",
+        items: [
+          "Pesquisar o nome no site do INPI (busca de marca) para ver se já existe registro em classes de marketing/publicidade.",
+          "Verificar disponibilidade de domínio .com.br e .com no Registro.br e no registrador internacional.",
+          "Checar @usuário disponível no Instagram, LinkedIn, YouTube e TikTok.",
+          "Fazer busca reversa no Google entre aspas para descobrir concorrentes com nome parecido.",
+          "Iniciar o pedido de registro de marca no INPI antes de gastar em identidade visual.",
+          "Registrar CNPJ com nome fantasia idêntico ao nome escolhido para evitar retrabalho.",
+          "Guardar prints e datas de tudo — em disputa, quem prova primeiro uso costuma ganhar.",
+        ],
+      },
+      {
+        type: "callout",
+        variant: "warning",
+        title: "Registrar marca não é opcional",
+        body:
+          "Sem registro no INPI, qualquer concorrente com mais capital pode registrar o nome que você criou e te obrigar a mudar. Já vi agências com 4 anos de mercado perdendo o nome por não ter feito esse passo.",
+      },
+      { type: "h2", text: "Como testar nome e slogan antes de assumir", id: "como-testar" },
+      {
+        type: "steps",
+        items: [
+          {
+            title: "1. Teste de soletração",
+            body:
+              "Fale o nome ao telefone para 5 pessoas e peça para escreverem. Se mais de 2 errarem, o nome é frágil para indicações boca a boca.",
+          },
+          {
+            title: "2. Teste de memória",
+            body:
+              "Mostre nome + slogan por 5 segundos, distraia por 2 minutos e peça para repetirem. Menos de 60% de acerto = fraco.",
+          },
+          {
+            title: "3. Teste de posicionamento",
+            body:
+              "Pergunte ao cliente ideal: 'o que você acha que essa agência faz?'. Se a resposta não bater com sua oferta, o slogan não comunica.",
+          },
+          {
+            title: "4. Teste de preço",
+            body:
+              "Mostre a marca e pergunte quanto acham que custa um projeto médio. Se o número for muito abaixo do seu preço real, o branding precisa subir de nível antes de vender.",
+          },
+        ],
+      },
+      { type: "h2", text: "Erros que matam a marca antes de nascer", id: "erros" },
+      {
+        type: "list",
+        items: [
+          "Escolher pelo gosto do sócio, não pelo perfil do cliente.",
+          "Ignorar SEO no nome (nomes impossíveis de buscar no Google).",
+          "Copiar slogan de agência famosa gringa sem contexto local.",
+          "Deixar registro no INPI 'para depois' — depois vira nunca.",
+          "Slogan longo demais para caber em bio de Instagram.",
+          "Nome que envelhece rápido: 'Growth 4.0', 'Metaverso Studio', 'AI Agency Brasil'.",
+          "Domínio .com.br indisponível resolvido com hífens ou números.",
+        ],
+      },
+      {
+        type: "cta",
+        title: "Nome pronto? Hora de precificar direito.",
+        body:
+          "Marca forte sem precificação estratégica ainda deixa dinheiro na mesa. Veja como cobrar pelo valor que você entrega, não pela hora.",
+        label: "Ler: Precificação Estratégica",
+        href: "/artigos/precificacao-estrategica-para-agencias",
+      },
+    ],
+    faq: [
+      {
+        q: "Posso mudar o nome da minha agência depois de 1 ano?",
+        a: "Pode, mas custa caro em reconhecimento perdido. Se o nome atual não te representa, faça o rebranding com aviso de 60 dias, transição visual clara e uma narrativa pública explicando o motivo. Clientes respeitam decisão bem comunicada.",
+      },
+      {
+        q: "Preciso contratar uma agência de branding para criar o nome?",
+        a: "Não obrigatoriamente. Founders com clareza de nicho e método conseguem chegar em um bom nome sozinhos. Contrate branding profissional quando precisar de identidade visual completa, verbal system e manual de marca — não apenas para nomear.",
+      },
+      {
+        q: "Slogan e tagline são a mesma coisa?",
+        a: "Na prática do mercado brasileiro sim. Tecnicamente, tagline acompanha a marca por muitos anos (é quase parte do logo), e slogan pode ser trocado por campanha. Para agência iniciante, foque em criar uma tagline forte primeiro.",
+      },
+      {
+        q: "Devo registrar marca no INPI antes ou depois do primeiro cliente?",
+        a: "Antes. O registro leva de 12 a 24 meses, e o direito começa a valer da data do pedido. Quanto antes você protocola, mais protegido você fica em caso de disputa futura.",
+      },
+      {
+        q: "Vale a pena usar meu próprio nome como nome da agência?",
+        a: "Vale se sua marca pessoal já for um ativo real (autoridade pública, palestras, conteúdo). Não vale se você quer construir uma empresa vendável no futuro — vender uma marca com nome de pessoa é bem mais difícil.",
+      },
+    ],
+    internalLinks: [
+      { title: "Como Abrir uma Agência em 2026", slug: "como-abrir-agencia-de-marketing-digital-em-2026" },
+      { title: "Nichos Premium para Agências", slug: "nichos-premium-para-agencias-em-2026" },
+      { title: "Precificação Estratégica", slug: "precificacao-estrategica-para-agencias" },
+    ],
+    externalLinks: [
+      { title: "INPI — Busca e registro de marcas", url: "https://www.gov.br/inpi/pt-br", source: "INPI" },
+      { title: "Registro.br — Consulta de domínios", url: "https://registro.br/", source: "Registro.br" },
+      { title: "Sebrae — Guia de branding para pequenas empresas", url: "https://sebrae.com.br/", source: "Sebrae" },
+    ],
+  },
 ];
+
 
 export function getArticle(slug: string): FullArticle | undefined {
   return articles.find((a) => a.slug === slug);
